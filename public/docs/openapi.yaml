@@ -1,0 +1,202 @@
+openapi: 3.0.3
+info:
+  title: Laravel
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://127.0.0.1:8000'
+paths:
+  /api/image:
+    get:
+      summary: 'GET Picture List'
+      operationId: gETPictureList
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "[\n  {\n     \"id\"     :  1,\n     \"path\"   : \"oguz.jpg\",\n     \"sort\"   :  1,\n  },\n  {\n     \"id\"     :  2,\n     \"path\"   : \"test.jpg\",\n     \"sort\"   :  2,\n  }\n  ]"
+      tags:
+        - Picture
+      security: []
+    post:
+      summary: 'POST Add Picture.'
+      operationId: pOSTAddPicture
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: multipart/form-data
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  path: images/oguz.png
+                  sort: 999
+                  status: 1
+                properties:
+                  path:
+                    type: string
+                    example: images/oguz.png
+                  sort:
+                    type: integer
+                    example: 999
+                  status:
+                    type: integer
+                    example: 1
+      tags:
+        - Picture
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                path:
+                  type: string
+                  format: binary
+                  description: 'The Image.'
+                sort:
+                  type: integer
+                  description: 'The Image sort.'
+                  example: 999
+              required:
+                - path
+                - sort
+      security: []
+  '/api/image/{id}':
+    delete:
+      summary: 'DELETE Remove Picture.'
+      operationId: dELETERemovePicture
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Picture
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: ''
+                  example: 18
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the image.'
+        example: 31
+        required: true
+        schema:
+          type: integer
+  /api/sort:
+    patch:
+      summary: 'UPDATE Order the pictures by sort.'
+      operationId: uPDATEOrderThePicturesBySort
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n data [{\n   \"id\"    : 2\n   \"sort\"  : 1,\n   }]\n}"
+      tags:
+        - Picture
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  description: ''
+                  example:
+                    - quidem
+                  items:
+                    type: string
+                "data[0]['id']":
+                  type: integer
+                  description: ''
+                  example: 20
+                "data[0]['sort']":
+                  type: integer
+                  description: ''
+                  example: 6
+      security: []
+tags:
+  -
+    name: Picture
+    description: "\nAPI endpoints for managing Picture"
